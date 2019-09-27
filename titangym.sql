@@ -18,6 +18,31 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users`  (
+  `userid` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `username` varchar(40) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `gender` varchar(8) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `mobile` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `email` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `dob` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `joining_date` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  PRIMARY KEY (`userid`) USING BTREE,
+  UNIQUE INDEX `email`(`email`) USING BTREE,
+  INDEX `userid`(`userid`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES ('1529336794', 'Christiana Mayberry', 'Male', '3362013747', 'christiani@gmail.com', '1968-04-13', '2018-06-18');
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- ----------------------------
 -- Table structure for address
 -- ----------------------------
 DROP TABLE IF EXISTS `address`;
@@ -53,28 +78,6 @@ CREATE TABLE `admin`  (
 -- ----------------------------
 INSERT INTO `admin` VALUES ('admin1', 'admin1', 'admin1', 'Titanium Gym');
 
--- ----------------------------
--- Table structure for enrolls_to
--- ----------------------------
-DROP TABLE IF EXISTS `enrolls_to`;
-CREATE TABLE `enrolls_to`  (
-  `et_id` int(5) NOT NULL AUTO_INCREMENT,
-  `pid` varchar(8) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `uid` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `paid_date` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `expire` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `renewal` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`et_id`) USING BTREE,
-  INDEX `user_ID`(`uid`) USING BTREE,
-  INDEX `plan_ID_idx`(`pid`) USING BTREE,
-  CONSTRAINT `plan_ID` FOREIGN KEY (`pid`) REFERENCES `plan` (`pid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `user_ID` FOREIGN KEY (`uid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of enrolls_to
--- ----------------------------
-INSERT INTO `enrolls_to` VALUES (1, 'POQKJC', '1529336794', '2018-06-18', '2018-07-18', 'yes');
 
 -- ----------------------------
 -- Table structure for health_status
@@ -119,6 +122,29 @@ CREATE TABLE `plan`  (
 INSERT INTO `plan` VALUES ('POQKJC', 'Monthly Plan', 'A monthly subscription that unlocks the entire Gym Plan app and coach support on chat.', '1', 600, 'yes');
 
 -- ----------------------------
+-- Table structure for enrolls_to
+-- ----------------------------
+DROP TABLE IF EXISTS `enrolls_to`;
+CREATE TABLE `enrolls_to`  (
+  `et_id` int(5) NOT NULL AUTO_INCREMENT,
+  `pid` varchar(8) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `uid` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `paid_date` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `expire` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `renewal` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`et_id`) USING BTREE,
+  INDEX `user_ID`(`uid`) USING BTREE,
+  INDEX `plan_ID_idx`(`pid`) USING BTREE,
+  CONSTRAINT `plan_ID` FOREIGN KEY (`pid`) REFERENCES `plan` (`pid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `user_ID` FOREIGN KEY (`uid`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of enrolls_to
+-- ----------------------------
+INSERT INTO `enrolls_to` VALUES (1, 'POQKJC', '1529336794', '2018-06-18', '2018-07-18', 'yes');
+
+-- ----------------------------
 -- Table structure for timetable
 -- ----------------------------
 DROP TABLE IF EXISTS `timetable`;
@@ -134,26 +160,4 @@ CREATE TABLE `timetable`  (
   PRIMARY KEY (`tid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Table structure for users
--- ----------------------------
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users`  (
-  `userid` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `username` varchar(40) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `gender` varchar(8) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `mobile` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `email` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `dob` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `joining_date` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  PRIMARY KEY (`userid`) USING BTREE,
-  UNIQUE INDEX `email`(`email`) USING BTREE,
-  INDEX `userid`(`userid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of users
--- ----------------------------
-INSERT INTO `users` VALUES ('1529336794', 'Christiana Mayberry', 'Male', '3362013747', 'christiani@gmail.com', '1968-04-13', '2018-06-18');
-
-SET FOREIGN_KEY_CHECKS = 1;
